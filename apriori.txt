@@ -1,0 +1,26 @@
+import pandas as pd
+from mlxtend.frequent_patterns import apriori, association_rules
+from mlxtend.preprocessing  import transactionencoder
+
+dataset = [
+    ['Curd', 'Roti', 'Butter', 'Cream', 'eggs'],
+    ['Curd', 'onion', 'eggs', 'Cream', 'paneer'],
+    ['Curd', 'eggs', 'onion']
+]
+
+from mlxtend.preprocessing import TransactionEncoder
+
+te = TransactionEncoder()
+tranform_data = te.fit_transform(dataset)
+tranform_data
+
+df = pd.DataFrame(tranform_data, columns=te.columns_)
+df
+
+frequent_item = apriori(df, min_support=0.6, use_colnames=True)
+frequent_item
+
+rules = association_rules(frequent_item)
+rules
+
+rules[['antecedents', 'consequents', 'support', 'confidence', 'lift']]
